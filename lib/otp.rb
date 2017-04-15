@@ -18,8 +18,7 @@ module Otp
       raise "message/key different length" if message.length != key.length
       @message = message
       @key = key
-      @encrypted_message = message.bytes.map.
-        with_index{|e,i| (e.to_i ^ key.bytes[i]).to_s(16).rjust(2,'0') }.join
+      @encrypted_message = message.bytes.zip(key.bytes).map{|e| (e[0].to_i ^ e[1]).to_s(16).rjust(2,'0') }.join
     end
 
     def to_s
